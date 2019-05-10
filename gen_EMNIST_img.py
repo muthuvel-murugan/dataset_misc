@@ -34,6 +34,10 @@ if __name__ == '__main__':
         help='Train npz file name')
     parser.add_argument('--test_filename', type=str,
         help='Test npz file name')
+    parser.add_argument('--tr_fname_28', type=str,
+        help='Train npz file name')
+    parser.add_argument('--ts_fname_28', type=str,
+        help='Test npz file name')
 
     args = parser.parse_args()
 
@@ -68,5 +72,17 @@ if __name__ == '__main__':
     if args.test_filename != None:
         X_test = np.float32(X_test) / 255.
         np.savez_compressed(args.test_filename, data=X_test, labels=y_test)
+
+
+    if args.tr_fname_28 != None:
+        X_train = np.float32(X_train_im) / 255.
+        X_train = np.expand_dims(X_train, axis=-1)
+        print 'X_train : ', X_train.shape
+        np.savez_compressed(args.tr_fname_28, data=X_train, labels=y_train)
+    if args.ts_fname_28 != None:
+        X_test = np.float32(X_test_im) / 255.
+        X_test = np.expand_dims(X_test, axis=-1)
+        print 'X_test : ', X_test.shape
+        np.savez_compressed(args.ts_fname_28, data=X_test, labels=y_test)
 
 
